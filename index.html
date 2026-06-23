@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Grand+Hotel&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-storage-compat.js"></script>
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/15713/15713420.png" type="image/x-icon">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">SocioVerse</div>
+      <nav>
+        <a class="nav-item active" href="#">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10.5z"/><path d="M9 21V13h6v8"/></svg></span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></span>
+          <span>Search</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 4l2.5 7.5L20 12l-7.5 2.5L12 20l-2.5-7.5L4 12l7.5-2.5L12 4z"/></svg></span>
+          <span>Explore</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 5-3 6-3 6h18s-3-1-3-6"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <span>Notifications</span>
+        </a>
+        <button id="open-popup" class="nav-item" href="#">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          <span>Create</span>
+    </button>
+      </nav>
+      <div class="sidebar-footer">
+
+        <a id="profile-avatar" class="nav-item profile-link" href="#">
+          <img class="avatar small" src="https://lh3.googleusercontent.com/a/ACg8ocLwSq9MGBUzBx-afBKbOdcvBr5s5qJLqtxlCkW6gA_tKovybkA=s96-c" alt="Profile">
+          <span>Profile</span>
+        </a>
+      </div>
+    </aside>
+
+    <main id="feed" class="feed-column">
+
+
+
+
+      <section class="post-card">
+        <div class="post-header">
+          <div class="user-meta">
+            <img class="avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="mikaela">
+            <div>
+              <strong>mikaela</strong>
+              <span>Paris</span>
+            </div>
+          </div>
+          <button class="options" aria-label="Post options"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
+        </div>
+        <img class="post-image" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80" alt="post">
+        <div class="post-actions">
+          <div>
+            <button aria-label="Like"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            <button class="liked-btn" aria-label="Liked"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.1 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.65 11.54L12.1 21.35z"/></svg></button>
+            <button aria-label="Comment"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+            <button aria-label="Share"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+          </div>
+          <!-- <button>🔖</button> -->
+        </div>
+        <div class="post-likes">876 likes</div>
+        <div class="post-caption"><strong>mikaela</strong> Weekend vibes ✨</div>
+        <div class="post-comments">View all 18 comments</div>
+        <div class="comment-box">
+          <input type="text" placeholder="Add a comment..." />
+          <button>Post</button>
+        </div>
+      </section>
+    </main>
+
+    <aside class="right-panel">
+    
+
+      <div class="suggestions-header">
+        <span>Suggestions for you</span>
+        <a href="#">See All</a>
+      </div>
+
+      <div class="suggestion-item">
+        <div class="suggestion-user">
+          <img class="avatar small" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="ellen_rose">
+          <div>
+            <strong>ellen_rose</strong>
+            <span>Followed by alex + 3 more</span>
+          </div>
+        </div>
+        <button>Follow</button>
+      </div>
+      <div class="suggestion-item">
+        <div class="suggestion-user">
+          <img class="avatar small" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80" alt="travel_daily">
+          <div>
+            <strong>travel_daily</strong>
+            <span>New to Instagram</span>
+          </div>
+        </div>
+        <button>Follow</button>
+      </div>
+      <div class="suggestion-item">
+        <div class="suggestion-user">
+          <img class="avatar small" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="naturelover">
+          <div>
+            <strong>naturelover</strong>
+            <span>Suggested for you</span>
+          </div>
+        </div>
+        <button>Follow</button>
+      </div>
+
+      <!-- <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Help</a>
+        <a href="#">Press</a>
+        <a href="#">API</a>
+        <a href="#">Jobs</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div> -->
+    </aside>
+  </div>
+
+  <div id="popup" class="popup-overlay">
+    <div class="popup-modal">
+      <div class="popup-header">
+        <button id="popup-close" class="popup-close" aria-label="Close upload dialog"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <span>Create new post</span>
+        <button id="post-upload" class="popup-share">Share</button>
+      </div>
+      <div class="popup-body">
+        <div class="popup-media" >
+            <img id="media" src="https://lh3.googleusercontent.com/a/ACg8ocLwSq9MGBUzBx-afBKbOdcvBr5s5qJLqtxlCkW6gA_tKovybkA=s96-c" alt="" srcset="">
+          <div id="media-placeholder" class="media-placeholder" >
+            <div class="upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/><path d="M5 20h14"/></svg></div>
+            <h3>Drag photos here</h3>
+ 
+            <label  for="select" class="file-btn">Select from computer</label>
+            <input type="file" id="select" name="select" hidden>
+          </div>
+        </div>
+        <div class="popup-details">
+          <div class="details-top">
+            <img class="avatar small" src="https://lh3.googleusercontent.com/a/ACg8ocLwSq9MGBUzBx-afBKbOdcvBr5s5qJLqtxlCkW6gA_tKovybkA=s96-c" alt="your profile">
+            <span>your_name</span>
+          </div>
+          <textarea id="textarea" placeholder="Write a caption..."></textarea>
+         
+          <div class="details-count">0/2200</div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <div id="loader" class="popup-overlay">
+      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExejU4cjhmcWV2OHRrOXF2anE4YmIzdXYxYTZxZGhleW9xeGIweWd2YyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/Pmj6o3JpZU4v5EZSHa/giphy.webp" alt="" srcset="">
+    
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
