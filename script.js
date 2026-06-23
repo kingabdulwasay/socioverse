@@ -28,13 +28,14 @@ async function googleAuth() {
 })
 .then(() => {
     console.log("Document successfully written!");
-      localStorage.setItem("user", JSON.stringify({ uid: credentials.user.uid, name: credentials.user.displayName, photo: credentials.user.photoURL }))
-  window.location.reload()
+
 })
 .catch((error) => {
     console.error("Error writing document: ", error);
 });
     } 
+      localStorage.setItem("user", JSON.stringify({ uid: credentials.user.uid, name: credentials.user.displayName, photo: credentials.user.photoURL }))
+  window.location.reload()
 }).catch((error) => {
     console.log("Error getting document:", error);
 })
@@ -47,7 +48,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       getDatafromFirebase()
   if (!session) {
     await googleAuth()
-    document.getElementById("profile-avatar").innerHTML = `<span>Signing in...</span>`
+    document.getElementById("profile-avatar").innerHTML = `<a id="profile-avatar" class="nav-item profile-link" href="#">
+          <img class="avatar small" src="https://cdn-icons-png.flaticon.com/128/3177/3177440.png" alt="Profile">
+          <span>Profile</span>
+        </a>`
   } else {
 
     document.getElementById("profile-avatar").innerHTML = ` <img class="avatar small" src=${session.photo} alt="Profile">
@@ -58,8 +62,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 })
 
 document.getElementById("open-popup").addEventListener("click", () => {
-  document.getElementById("popup").style.display = "flex"
-
+  const popup = document.getElementById("popup");
+  const modal = document.querySelector(".popup-modal");
+  popup.classList.remove("destroyed");
+  modal.classList.remove("destroyed");
+  popup.classList.add("active");
+  modal.classList.add("active");
+  popup.style.display = "flex";
 })
 var actualFile
 document.getElementById("select").addEventListener("change", e => {
@@ -70,12 +79,18 @@ document.getElementById("select").addEventListener("change", e => {
 })
 
 document.getElementById("post-upload").addEventListener("click", async () => {
+  if (session && caption != "") {
   document.getElementById("loader").style.display = "flex"
-  document.getElementById("popup").style.display = "none"
+  
+  const popup = document.getElementById("popup");
+  const modal = document.querySelector(".popup-modal");
+  popup.classList.add("destroyed");
+  modal.classList.add("destroyed");
+  popup.classList.remove("active");
+  modal.classList.remove("active");
 
   const formData = new FormData()
   formData.append("file", actualFile)
-
   formData.append("upload_preset", "zlqj3cor")
 
   const response = await fetch(`https://api.cloudinary.com/v1_1/dobmzstib/upload`, {
@@ -84,13 +99,24 @@ document.getElementById("post-upload").addEventListener("click", async () => {
   })
   const image = await response.json()
   var caption = document.getElementById("textarea").value
-  if (session && caption != "") {
     sendDataToFirebase(session.uid, caption, image.url)
+    
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 300);
   }
 })
 
 document.getElementById("popup-close").addEventListener("click", () => {
-  document.getElementById("popup").style.display = "none"
+  const popup = document.getElementById("popup");
+  const modal = document.querySelector(".popup-modal");
+  popup.classList.add("destroyed");
+  modal.classList.add("destroyed");
+  popup.classList.remove("active");
+  modal.classList.remove("active");
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 300);
 })
 
 

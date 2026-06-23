@@ -435,62 +435,90 @@ nav {
 }
 
 /* Popup design */
-.popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
 .popup-modal {
   width: min(840px, 92vw);
-  background: var(--white);
-  border-radius: 12px;
+  background: var(--surface-strong);
+  border-radius: 24px;
   overflow: hidden;
   border: 1px solid var(--border);
+  box-shadow: 0 28px 120px rgba(12, 20, 58, 0.15);
+  transition: box-shadow 150ms ease, transform 150ms ease;
+  will-change: transform, opacity;
 }
 
 .popup-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
+  padding: 20px 24px;
   border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(31, 111, 255, 0.03), rgba(124, 71, 255, 0.02));
 }
 
 .popup-header span {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
 }
 
 .popup-close,
 .popup-share {
   font-size: 0.9rem;
   font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: all 200ms ease;
 }
 
 .popup-close {
-  color: #262626;
+  color: var(--muted);
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.popup-close:hover {
+  background: rgba(15, 23, 42, 0.1);
+  color: var(--text);
 }
 
 .popup-share {
-  color: var(--accent);
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 8px 20px rgba(31, 111, 255, 0.24);
+}
+
+.popup-share:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(31, 111, 255, 0.32);
+}
+
+.popup-share:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .popup-body {
   display: grid;
   grid-template-columns: 1.2fr 0.9fr;
   min-height: 520px;
+  background: var(--surface-strong);
 }
 
 .popup-media {
-  background: #f7f7f7;
+  background: linear-gradient(135deg, #f7f7f7 0%, #f0f2f5 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.popup-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(31, 111, 255, 0.06), transparent 60%);
+  pointer-events: none;
 }
 
 .popup-media img{
@@ -499,69 +527,128 @@ nav {
 
 .media-placeholder {
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .upload-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 16px;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 24px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #efefef;
+  background: linear-gradient(135deg, rgba(31, 111, 255, 0.12), rgba(124, 71, 255, 0.08));
   font-size: 1.7rem;
+  color: var(--accent);
+  border: 2px solid rgba(31, 111, 255, 0.2);
+  transition: all 300ms ease;
+}
+
+.media-placeholder:hover .upload-icon {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, rgba(31, 111, 255, 0.18), rgba(124, 71, 255, 0.12));
+  border-color: rgba(31, 111, 255, 0.4);
 }
 
 .media-placeholder h3 {
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin-bottom: 14px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
 }
 
 
 
 .media-placeholder label {
-  background: var(--accent);
-  color: var(--white);
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: white;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: all 200ms ease;
+  box-shadow: 0 8px 20px rgba(31, 111, 255, 0.24);
+}
+
+.media-placeholder label:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(31, 111, 255, 0.32);
   cursor: pointer;
 }
 
 .popup-details {
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 24px;
+  background: var(--surface-strong);
 }
 
 .details-top {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
 }
 
 .details-top span {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
 }
 
 .popup-details textarea {
   width: 100%;
-  min-height: 180px;
-  border: none;
+  min-height: 280px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
   resize: none;
   outline: none;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--text);
+  background: rgba(15, 23, 42, 0.02);
+  padding: 14px 16px;
+  transition: all 200ms ease;
+  font-family: inherit;
+}
+
+.popup-details textarea:focus {
+  border-color: var(--accent);
+  background: rgba(31, 111, 255, 0.04);
+  box-shadow: 0 0 0 3px rgba(31, 111, 255, 0.1);
+}
+
+.popup-details textarea::placeholder {
+  color: var(--muted);
 }
 
 .details-icons {
   display: flex;
   gap: 14px;
-  font-size: 1rem;
-  margin-top: 12px;
+  font-size: 1.2rem;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.details-icons button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(31, 111, 255, 0.08);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  transition: all 200ms ease;
+}
+
+.details-icons button:hover {
+  background: rgba(31, 111, 255, 0.16);
+  transform: scale(1.1);
 }
 
 .details-count {
@@ -569,6 +656,7 @@ nav {
   text-align: right;
   color: var(--muted);
   font-size: 0.85rem;
+  padding-top: 12px;
 }
 
 @media (max-width: 1100px) {
@@ -649,5 +737,220 @@ nav {
 
   .popup-media {
     min-height: 360px;
+  }
+}
+
+/* Post Modal Destroyed States & Animations */
+@keyframes modalFadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalFadeOutScale {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlayFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes destructionPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(0.98);
+    opacity: 0.5;
+  }
+}
+
+@keyframes crumble {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rotation, 0deg)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Post Modal - Active/Open State */
+.popup-overlay.active {
+  display: flex;
+  animation: overlayFadeIn 300ms ease-out;
+}
+
+.popup-modal.active {
+  animation: modalFadeInScale 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Post Modal - Destroyed/Closing State */
+.popup-overlay.destroyed {
+  animation: overlayFadeOut 300ms ease-in;
+  display: flex;
+}
+
+.popup-modal.destroyed {
+  animation: modalFadeOutScale 300ms ease-in;
+  pointer-events: none;
+}
+
+/* Post Modal - Destruction Effects */
+.popup-modal.destruction-effect {
+  animation: destructionPulse 400ms ease-out;
+}
+
+.popup-modal.crumble-effect {
+  animation: crumble 600ms ease-in forwards;
+}
+
+/* Post Modal Visual States */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: background-color 150ms ease;
+}
+
+.popup-overlay.active {
+  display: flex;
+  animation: overlayFadeIn 300ms ease-out;
+}
+
+.popup-overlay.destroyed {
+  animation: overlayFadeOut 300ms ease-in;
+  display: flex;
+}
+
+.popup-overlay.dim-active {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.popup-modal.elevated {
+  box-shadow: 0 32px 120px rgba(12, 20, 58, 0.18);
+}
+
+.popup-modal.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(10%);
+}
+
+.popup-modal.error-state {
+  box-shadow: 0 0 0 2px #ff4456, 0 24px 80px rgba(255, 68, 86, 0.12);
+  animation: destructionPulse 600ms ease-out;
+}
+
+/* Post Content - Destroyed State */
+.post-card.destroyed {
+  animation: modalFadeOutScale 400ms ease-in;
+  pointer-events: none;
+}
+
+.post-card.removing {
+  opacity: 0.6;
+  filter: blur(2px);
+  transform: scale(0.98);
+}
+
+/* Modal Header - Destroyed State */
+.popup-header.destroyed {
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+
+/* Modal Body Elements - Destruction */
+.popup-body.destruction-mode {
+  animation: destructionPulse 500ms ease-out;
+}
+
+.popup-media.destroyed {
+  background: rgba(247, 247, 247, 0.3);
+  filter: blur(4px);
+}
+
+.popup-details.destroyed textarea {
+  color: rgba(26, 31, 43, 0.3);
+  background: rgba(15, 23, 42, 0.02);
+  pointer-events: none;
+}
+
+/* Popup Close Button - Destroyed State */
+.popup-close.destroying {
+  animation: destructionPulse 300ms ease-out;
+  color: #ff4456;
+}
+
+/* Loading & Error States */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  animation: overlayFadeIn 200ms ease-out;
+}
+
+#loader.active {
+  display: flex;
+}
+
+/* Responsive Destroyed States */
+@media (max-width: 900px) {
+  @keyframes mobileModalFadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  .popup-modal.destroyed {
+    animation: mobileModalFadeOut 300ms ease-in;
+  }
+
+  .post-card.destroyed {
+    animation: mobileModalFadeOut 300ms ease-in;
   }
 }
